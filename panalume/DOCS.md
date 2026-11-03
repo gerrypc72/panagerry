@@ -22,4 +22,4 @@ Added from **Add → Energy**; entities are auto-detected for the myenergi integ
 
 ## Import from ha-fusion
 
-Edit → **Layout → Import from ha-fusion** rebuilds the dashboard from your ha-fusion app: views, rooms, buttons (their state / name / icon / colour / service templates keep working, including `entity_id`), cameras and sidebar items, with tablet, phone and desktop layouts. An **Energy** view is added from auto-detected Octopus / myenergi / solar / EV entities. Icons from other sets (`tabler:`, `mingcute:`, `solar:` …) load from Iconify.
+Edit → **Layout → Import from ha-fusion** rebuilds the dashboard from your ha-fusion app: views, rooms, buttons (their state / name / icon / colour / service templates keep working, including `entity_id`), cameras and sidebar items, with tablet, phone and desktop layouts. An **Energy** view is added from auto-detected myenergi / solar / EV entities. Icons from other sets (`tabler:`, `mingcute:`, `solar:` …) load from Iconify.
