@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.38.1
+
+- **Octopus Energy support removed (fork).** The Octopus rates, Octoplus sessions, Intelligent Octopus, Energy cost today and Heat pump cards are gone, along with the Octopus auto-detection in the other cards and the Intelligent Octopus Go cheap-hours tracker on the Zappi / Eddi card. Shared helpers moved from `lib/octopus.js` to `lib/util.js`. Existing dashboards that still contain the removed cards will show them as unknown cards: delete them in the editor.
+
 ## 0.38.0
 
 - **Fan card.** For fans and air purifiers: on / off, a speed slider, the fan's modes (auto, sleep, turbo…), and oscillate and direction when it has them. Add a **light** for a ceiling fan's light (on / off and brightness on the same card), or **sensors** such as PM2.5, humidity or filter life for an air purifier.

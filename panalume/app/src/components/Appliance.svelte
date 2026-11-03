@@ -6,7 +6,7 @@
   import { t, ent } from '../lib/tpl.js';
   import { callService } from '../lib/ha.svelte.js';
   import { clock } from '../lib/clock.svelte.js';
-  import { hm, day } from '../lib/octopus.js';
+  import { hm, day } from '../lib/util.js';
   import { KINDS } from '../lib/appliance.js';
   let { kind, props, w = 420, h = 220 } = $props();
   const K = KINDS[kind];

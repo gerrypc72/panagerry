@@ -7,7 +7,7 @@
   function cars() {
     const out = [];
     for (const id of states.keys()) {
-      let m = /^sensor\.((?!octopus)[a-z0-9_]+)_state_of_charge$/.exec(id);
+      let m = /^sensor\.([a-z0-9_]+)_state_of_charge$/.exec(id);
       if (m && !m[1].endsWith('_target')) out.push({ p: m[1], soc: id, make: 'vw' });
       m = /^sensor\.([a-z0-9_]+)_battery_autonomy$/.exec(id);
       if (m && states.has(`sensor.${m[1]}_battery`)) out.push({ p: m[1], soc: `sensor.${m[1]}_battery`, make: 'renault' });

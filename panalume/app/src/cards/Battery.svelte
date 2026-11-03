@@ -1,5 +1,5 @@
 <script module>
-  import { find } from '../lib/octopus.js';
+  import { find } from '../lib/util.js';
   export const meta = {
     type: 'battery', name: 'Home battery', icon: 'mdi:home-battery', category: 'Energy',
     size: { w: 400, h: 260 }, tap: 'none', hold: 'more-info',

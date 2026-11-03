@@ -1,5 +1,5 @@
 <script module>
-  import { find } from '../lib/octopus.js';
+  import { find } from '../lib/util.js';
   const first = (...res) => { for (const re of res) { const id = find(re); if (id) return id; } return ''; };
   export const meta = {
     type: 'solar', name: 'Solar', icon: 'mdi:solar-power-variant', category: 'Energy',

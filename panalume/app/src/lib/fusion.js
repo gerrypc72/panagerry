@@ -5,7 +5,7 @@
 import { cards as registry } from './registry.js';
 import { DEFAULT_THEME, DEVICES } from './config.svelte.js';
 import { states } from './ha.svelte.js';
-import { myenergiPower } from './octopus.js';
+import { myenergiPower } from './util.js';
 
 const GAP = 12;
 let n = 0;
@@ -175,19 +175,14 @@ function addEnergy(cfg, add) {
   const card = (t, extra = {}) => add(t, { ...structuredClone(meta(t).defaults || {}), ...(meta(t).autofill?.() || {}), ...extra });
   const items = [];
   const has = (t, key) => !!meta(t).autofill?.()[key];
-  if (has('octopus-rates', 'rates')) items.push(['octopus-rates', card('octopus-rates'), 2, 290]);
   items.push(['powerflow', null, 1, 290]);
-  if (has('octopus-sessions', 'saving')) items.push(['octopus-sessions', card('octopus-sessions'), 1, 380]);
-  if (has('octopus-intelligent', 'dispatching')) items.push(['octopus-intelligent', card('octopus-intelligent'), 1, 380]);
-  if (has('energy-today', 'cost')) items.push(['energy-today', card('energy-today'), 1, 300]);
-  if (has('heatpump', 'power_in')) items.push(['heatpump', card('heatpump'), 1, 300]);
   if (has('battery', 'soc')) items.push(['battery', card('battery'), 1, 260]);
   if (has('predbat', 'plan')) items.push(['predbat', card('predbat'), 1, 420]);
   if (has('myenergi', 'mode')) items.push(['myenergi', card('myenergi'), 1, 230]);
   const evName = (p) => p.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
   for (const id of states.keys()) {
     let m;
-    if ((m = id.match(/^sensor\.((?!octopus)[a-z0-9_]+?)_state_of_charge$/)) && !m[1].endsWith('target')) {
+    if ((m = id.match(/^sensor\.([a-z0-9_]+?)_state_of_charge$/)) && !m[1].endsWith('target')) {
       // Audi / VW style
       const p = m[1];
       const s = (x, d = 'sensor') => `${d}.${p}_${x}`;

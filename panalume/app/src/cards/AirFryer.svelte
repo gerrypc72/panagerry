@@ -1,5 +1,5 @@
 <script module>
-  import { find } from '../lib/octopus.js';
+  import { find } from '../lib/util.js';
   // A smart plug's power sensor, not its energy / voltage / power-factor ones.
   const POWER = /^sensor\.(?!.*(factor|energy|total|today|yesterday|daily|monthly|cost|apparent|reactive))[a-z0-9_]*air_?fryer[a-z0-9_]*(power|watt|consumption)[a-z0-9_]*$/;
   export const meta = {
@@ -27,7 +27,7 @@
   import { t, ent } from '../lib/tpl.js';
   import { conn, history } from '../lib/ha.svelte.js';
   import { clock } from '../lib/clock.svelte.js';
-  import { hm, day } from '../lib/octopus.js';
+  import { hm, day } from '../lib/util.js';
   import { latestCook, watts, fmtDur } from '../lib/airfryer.js';
   let { props, w = 420, h = 200 } = $props();
   const show = (k) => !props.hide?.[k];

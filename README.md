@@ -40,18 +40,13 @@ First-class cards for UK energy setups, with entities **auto-detected** when you
 
 | Card | What it shows |
 |---|---|
-| **Octopus rates** | Price now and next (FREE during Free Electricity and Power Ups, with Saving Session rewards), cheapest 2-hour window, half-hourly bars (Agile, Go, Intelligent) with export rate, Intelligent dispatches and Octoplus sessions overlaid |
-| **Octoplus sessions** | Live Saving Session / Power Down banner with baseline vs usage, upcoming Saving Sessions, Power Ups and Free Electricity with **Join** buttons, points and 12-month stats |
-| **Intelligent Octopus** | Dispatch status, planned and recent slots, smart / bump charge, ready-by time, charge target |
 | **Energy usage** | Home Assistant's energy graph, live: hourly grid / solar / battery / export bars, today's totals, cost and earnings, price paid per hour, what the house is using now |
-| **Energy cost today** | Cost, kWh, average p/kWh, export, solar, yesterday, peak/off-peak split, half-hourly usage coloured by rate |
 | **Solar** | Generating now, today's curve against the Solcast forecast, above / below forecast, where it's going, tomorrow and the week ahead |
 | **Energy flow** | Self-powered %, solar / battery / house figures and a live flow chart of every route power is taking |
 | **Power flow** | Solar, grid, battery, home and EV with animated flows (up to two solar arrays and two batteries, plus up to four appliances) |
 | **Home battery** | Charge %, kWh left, charge / discharge power, time to full or to reserve, health, today in / out (SolarEdge auto-detected) |
 | **Predbat** | What Predbat is doing, the 24-hour charge / export plan with predicted battery %, costs and savings, Charge / Export / Hold now |
-| **Heat pump** | Live COP / SCOP, power in and heat out, flow and outdoor temperature, hot water with Boost |
-| **Zappi / Eddi** | Status, live power (each device's own reading), session kWh, charge-mode buttons, boosts, and how much of Intelligent Octopus Go's 6 cheap charging hours are left (myenergi) |
+| **Zappi / Eddi** | Status, live power (each device's own reading), session kWh, charge-mode buttons, boosts (myenergi) |
 | **Electric vehicle** | Battery vs target, range, charging, plug / lock / climate (Audi / VW / Skoda Connect, MySkoda and Renault / Dacia / Alpine integrations; switch the card between your cars in one go) |
 
 <p align="center"><img src="docs/screenshots/energy-usage.webp" alt="Energy usage card" width="660"><br><sub><b>Energy usage</b>: where today's energy came from and went, hour by hour, with cost, earnings and the price paid, updating live.</sub></p>
@@ -66,7 +61,7 @@ First-class cards for UK energy setups, with entities **auto-detected** when you
 <td width="50%"><img src="docs/screenshots/battery.webp" alt="Home battery card"><br><sub><b>Home battery</b>: charge, kWh left, charging power, time until full or until your backup reserve, health, temperature and a 24-hour graph.</sub></td>
 </tr></table>
 
-Built for the [Octopus Energy](https://github.com/BottlecapDave/HomeAssistant-OctopusEnergy), [myenergi](https://github.com/CJNE/ha-myenergi), [Predbat](https://github.com/springfall2008/batpred) and SolarEdge Modbus Multi integrations. Every card lets you show or hide each of its sections.
+Built for the [myenergi](https://github.com/CJNE/ha-myenergi), [Predbat](https://github.com/springfall2008/batpred) and SolarEdge Modbus Multi integrations. Every card lets you show or hide each of its sections.
 
 ## Around the house
 

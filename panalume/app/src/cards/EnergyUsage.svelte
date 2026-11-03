@@ -1,5 +1,5 @@
 <script module>
-  import { find } from '../lib/octopus.js';
+  import { find } from '../lib/util.js';
   export const meta = {
     type: 'energy-usage', name: 'Energy usage', icon: 'mdi:chart-bar-stacked', category: 'Energy',
     size: { w: 640, h: 340 }, tap: 'none',
@@ -10,8 +10,6 @@
       grid_power: find(/^sensor\.myenergi_hub_.+_power_grid/),
       solar_power: find(/^sensor\.myenergi_hub_.+_power_generation/) || find(/^sensor\..*solar.*(production|generation|pv).*_w$/),
       battery_power: find(/^sensor\.solaredge_b1_dc_power$/),
-      import_price: find(/^sensor\.octopus_energy_electricity_(?!.*export).+_current_rate$/),
-      export_price: find(/^sensor\.octopus_energy_electricity_.+_export_current_rate$/),
     }),
     sections: [{ key: 'live', label: 'Live now' }, { key: 'totals', label: 'Totals' }, { key: 'prices', label: 'Prices & cost' }, { key: 'chart', label: 'Chart' }, { key: 'legend', label: 'Legend' }],
     fields: [

@@ -7,7 +7,7 @@
   import { app, load, save, layout, setPanelSide, DEVICES, MODE_SHORT, detectDevice, setView, removeSelected, duplicateSelected, selectedPlacement, changed, undo, undoLast, selectionSet, ensureEditable, zoneList, groupSelected } from './lib/config.svelte.js';
   import { conn, toasts, watchEntities, states, subscribe } from './lib/ha.svelte.js';
   import { loadMoney } from './lib/money.svelte.js';
-  import { HUB_CHARGING, MYENERGI_OWN } from './lib/octopus.js';
+  import { HUB_CHARGING, MYENERGI_OWN } from './lib/util.js';
   import { GRID } from './lib/config.svelte.js';
   import { setKiosk } from './lib/kiosk.js';
   import { connectLive } from './lib/live.js';

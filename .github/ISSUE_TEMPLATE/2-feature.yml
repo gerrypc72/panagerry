@@ -17,4 +17,4 @@ body:
     id: entities
     attributes:
       label: Integrations or devices involved (if any)
-      placeholder: e.g. Roborock S8, Octopus Energy
+      placeholder: e.g. Roborock S8, Sonos

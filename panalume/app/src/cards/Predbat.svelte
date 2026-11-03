@@ -1,5 +1,5 @@
 <script module>
-  import { find } from '../lib/octopus.js';
+  import { find } from '../lib/util.js';
   export const meta = {
     type: 'predbat', name: 'Predbat', icon: 'mdi:battery-sync', category: 'Energy',
     size: { w: 440, h: 420 }, tap: 'none',
@@ -42,7 +42,7 @@
   import { fmtMoney, fmtRate } from '../lib/money.svelte.js';
   import { clock } from '../lib/clock.svelte.js';
   import { callService } from '../lib/ha.svelte.js';
-  import { hm, day, until } from '../lib/octopus.js';
+  import { hm, day, until } from '../lib/util.js';
   let { props } = $props();
   const show = (k) => !props.hide?.[k];
   const now = $derived(clock.now);

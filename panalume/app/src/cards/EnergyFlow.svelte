@@ -1,5 +1,5 @@
 <script module>
-  import { find } from '../lib/octopus.js';
+  import { find } from '../lib/util.js';
   // Left blank, the battery power comes from SolarEdge's battery sensor if there is one.
   const SE_BATT = ['sensor.solaredge_b1_dc_power', 'sensor.solaredge_i1_b1_dc_power'];
   const first = (...res) => { for (const re of res) { const id = find(re); if (id) return id; } return ''; };

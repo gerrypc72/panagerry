@@ -1,7 +1,7 @@
 <script module>
   import { states } from '../lib/ha.svelte.js';
   // Climate entities that are rooms rather than a hot tub, car or heat pump zone.
-  const SKIP = /spa|hot_?tub|climatisation|octopus_energy_heat_pump|water_heater/;
+  const SKIP = /spa|hot_?tub|climatisation|water_heater/;
   export const meta = {
     type: 'climate-group', name: 'Climate group', icon: 'mdi:home-thermometer', category: 'Controls',
     size: { w: 440, h: 400 }, tap: 'none', hold: 'none',

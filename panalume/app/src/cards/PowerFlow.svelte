@@ -28,7 +28,7 @@
 </script>
 
 <script>
-  import { myenergiPower } from '../lib/octopus.js';
+  import { myenergiPower } from '../lib/util.js';
   import Icon from '../components/Icon.svelte';
   import { t, ent } from '../lib/tpl.js';
   import { name } from '../lib/entity.js';
