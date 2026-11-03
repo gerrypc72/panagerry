@@ -31,6 +31,7 @@ docs/fork/                questi documenti
 | 0.38.2 | **Carta Linear gauge** (`gauge-linear`) e **carta Wind rose** (`windrose`, pensata per Ecowitt). | `cards/LinearGauge.svelte`, `cards/WindRose.svelte` |
 | 0.38.3 | **Schermo di destinazione per board.** Ogni vista può avere `width` e `height` propri (preset iPad, Echo Spot / Show 5 / Show 8, custom). `layout()` restituisce un layout con quella larghezza/altezza e senza sidebar (`baseLayout()` è l'originale). Stage: display `screen` forzato, niente "fill", cornice tratteggiata in modifica. Pulsante **Duplicate** per copiare una board con carte indipendenti. | `lib/config.svelte.js` (`SCREENS`, `screenKey`, `setViewScreen`, `duplicateView`), `Stage.svelte`, `Editor.svelte` |
 | 0.38.4 | **Add-on rinominato Panagerry** (slug `panagerry`, titolo, icona `mdi:compass-rose`, URL e maintainer in `repository.yaml`), per convivere con Panalume. | `config.yaml`, `repository.yaml` |
+| 0.38.5 | **Nuova icona e logo** (rosa dei venti, sfumatura turchese-ambra) per distinguere Panagerry da Panalume. Immagini generate con uno script Pillow (non nel repo): `panalume/icon.png` 128×128, `panalume/logo.png` 250×100. | `panalume/icon.png`, `panalume/logo.png`, `README.md` |
 
 ## Build in locale (Mac)
 
@@ -77,6 +78,18 @@ Se il repo è **privato**, HA non può leggerlo dall'elenco dei repository di ad
 - Dati separati da Panalume: ogni add-on ha la propria `/data`. Le dashboard dell'uno non appaiono nell'altro.
 - Tutto questo è stato provato e funziona (build Mac, prova in locale, installazione in HA). Il comportamento delle singole carte nuove
   su dati reali Ecowitt non è stato verificato.
+
+## Accesso da browser
+
+1. **Tramite Home Assistant** (con il login di HA): voce **Panagerry** nella barra laterale, oppure
+   `http://<IP-DI-HA>:8123/local_panagerry` per l'add-on locale (per l'add-on installato da repository il prefisso `local_` è
+   un codice, visibile nell'indirizzo quando si apre dalla barra laterale). I parametri funzionano:
+   `…/local_panagerry?kiosk&fit=screen#NOME_BOARD`.
+2. **Porta diretta** (senza login HA, per i device a muro): disattivata di default. Pagina dell'add-on → Configurazione → Rete →
+   assegna una porta a `8099/tcp` (es. **8100**, diversa da quella di Panalume se ce l'ha), salva e riavvia l'add-on.
+   Indirizzo: `http://<IP-DI-HA>:8100/?fit=screen#NOME_BOARD`.
+   **Sicurezza:** chiunque sia sulla rete raggiunge la dashboard senza password e, tramite il permesso dell'add-on verso HA,
+   può comandare entità e servizi. Solo su rete di casa fidata, mai esposta a internet (niente port forwarding).
 
 ## Stato e limiti noti
 
