@@ -5,7 +5,7 @@
   import { cards, categories } from '../lib/registry.js';
   import {
     app, layout, DEVICES, DEFAULT_THEME, changed, addCard, selectedCard, selectedPlacement, removeSelected,
-    duplicateSelected, copyToView, copyLayout, importConfig, selectionSet, groupSelected, ungroupSelected, ensureEditable, setMode, MODES, DISPLAYS, zoneList, addView, removeView, setView, isPlacedAnywhere, placeExisting, zoneWidth, setMainWidth, screenHome, setScreenHome, screenDevice, setScreenDevice, groupCloses, setGroupCloses, setSidebarSide, addFilledView, changeType, otherLayouts, copyToLayout,
+    duplicateSelected, copyToView, copyLayout, importConfig, selectionSet, groupSelected, ungroupSelected, ensureEditable, setMode, MODES, DISPLAYS, zoneList, addView, duplicateView, removeView, setView, isPlacedAnywhere, placeExisting, zoneWidth, setMainWidth, SCREENS, screenKey, setViewScreen, screenHome, setScreenHome, screenDevice, setScreenDevice, groupCloses, setGroupCloses, setSidebarSide, addFilledView, changeType, otherLayouts, copyToLayout,
   } from '../lib/config.svelte.js';
   import { areas, areaCards } from '../lib/area.js';
   // Settings kept on this screen only (not in the shared layout).
@@ -355,7 +355,7 @@
       {/if}
     {:else if app.panel === 'layout'}
       <h4>Layout</h4>
-      <p class="hint">One layout for every screen (this fork has no phone or desktop variants). To adapt a dashboard to another screen, make a separate view and use <code>?view=</code> / <code>?fit=</code> in the address.</p>
+      <p class="hint">One layout for every screen (this fork has no phone or desktop variants). The size below is the default; a board can have its own target screen (iPad, Echo Spot / Show 5 / Show 8, custom) in the <b>Views</b> tab. This screen: {innerWidth}×{innerHeight}.</p>
       <div class="fields">
         <Field obj={app.config.layouts[app.device]} f={{ key: 'kiosk', label: `Hide Home Assistant's header bar on ${app.device === 'tablet' ? 'tablets' : DEVICES[app.device].label.toLowerCase() + 's'}`, type: 'bool' }} />
         <Field obj={app.config.layouts[app.device]} f={{ key: 'display', label: `Sizing on ${app.device === 'tablet' ? 'tablets' : DEVICES[app.device].label.toLowerCase() + 's'}`, type: 'select', options: Object.entries(DISPLAYS).map(([value, label]) => ({ value, label })) }} />
@@ -399,6 +399,7 @@
           <div class="row">
             <button class="sm" onclick={() => setView(v.id)}>Open</button>
             <button class="sm" disabled={i === 0} onclick={() => { const a = app.config.views; [a[i - 1], a[i]] = [a[i], a[i - 1]]; changed(); }}><Icon icon="mdi:arrow-up" size="1em" /></button>
+            <button class="sm" title="Copy this board with its own copies of every card" onclick={() => duplicateView(v.id)}><Icon icon="mdi:content-copy" size="1em" /> Duplicate</button>
             <button class="sm red" disabled={app.config.views.length < 2} onclick={() => confirm(`Delete view ${v.name}?`) && removeView(v.id)}><Icon icon="mdi:delete-outline" size="1em" /></button>
           </div>
           <div class="fields">
@@ -406,6 +407,11 @@
             <Field obj={v} f={{ key: 'icon', label: 'Icon', type: 'icon' }} />
             <Field obj={v} f={{ key: 'image', label: 'Image (URL or path — shown instead of the icon)', type: 'text' }} />
             <Field obj={v} f={{ key: 'background', label: 'Background (overrides theme)', type: 'text' }} />
+            <Field obj={{ screen: screenKey(v) }} f={{ key: 'screen', label: 'Target screen of this board', type: 'select', options: [{ value: '', label: 'Same size as the layout' }, ...Object.entries(SCREENS).map(([value, sc]) => ({ value, label: `${sc.label} · ${sc.width}×${sc.height}` })), { value: 'custom', label: 'Custom size' }], hint: 'The board is drawn at exactly this size (a dashed frame shows it while editing) and fitted whole to the screen. It has no sidebar.' }} onset={(k) => setViewScreen(v, k)} />
+            {#if Number(v.width)}
+              <Field obj={v} f={{ key: 'width', label: 'Width (px)', type: 'number' }} />
+              <Field obj={v} f={{ key: 'height', label: 'Height (px)', type: 'number' }} />
+            {/if}
           </div>
         </div>
       {/each}

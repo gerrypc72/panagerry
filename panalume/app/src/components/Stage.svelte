@@ -28,9 +28,9 @@
   const fit = $derived(available / L.width);
   // Sizing per device (Layout tab, or ?fit=width|screen|actual in the URL):
   // fill the width, fit the whole view on screen (wall tablets), or actual size.
-  const display = $derived(param('fit') || app.config.layouts[app.device]?.display || 'width');
+  const display = $derived(param('fit') || (L.height ? 'screen' : '') || app.config.layouts[app.device]?.display || 'width');
   const bottom = (list) => (list || []).reduce((m, p) => Math.max(m, p.y + p.h), 0) + 20;
-  const mainContentH = $derived(bottom(L.zones[app.view]));
+  const mainContentH = $derived(L.height || bottom(L.zones[app.view]));
   const sideContentH = $derived(sb ? bottom(L.zones.sidebar) : 0);
   const preview = $derived(L.width < 700 && app.device !== autoDevice); // phone preview on a big screen
   // Fit-to-screen with a sidebar: by default the sidebar keeps one size on every
@@ -48,7 +48,7 @@
   // When a wall tablet shrinks a tall view to fit, stretch the canvas to the full
   // screen width (sidebar stays at the edge, main area gets the spare space)
   // instead of centring it with gaps either side.
-  const fill = $derived(!split && display === 'screen' && !app.editing && scale < fit);
+  const fill = $derived(!split && display === 'screen' && !app.editing && !L.height && scale < fit);
   const stageW = $derived(split ? available : fill ? available / scale : L.width);
   const left = $derived(offset + (split || fill ? 0 : Math.max(0, (available - L.width * scale) / 2)));
   const mainW = $derived(split ? (available - sb * sideZ) / mainZ : stageW - sb);
@@ -566,6 +566,7 @@
   {/if}
   <main class="zone main" role="presentation" data-size="{L.width}px layout · edge of the canvas" style="width:{mainW}px;height:{mainH}px;zoom:{mainZ};{app.config.views.find((v) => v.id === app.view)?.background ? 'background:' + app.config.views.find((v) => v.id === app.view).background : ''}"
     onpointerdown={(e) => bgDown(e, app.view)} onpointermove={move} onpointerup={end}>
+    {#if app.editing && L.height}<div class="frame" style="height:{L.height}px"></div>{/if}
     {@render zone(app.view, mainList)}
   </main>
 </div>
@@ -587,6 +588,8 @@
   .editing .zone { background-image: radial-gradient(circle, rgba(255,255,255,.09) 1px, transparent 1.2px); background-size: calc(var(--grid) * 2) calc(var(--grid) * 2); touch-action: none; }
   .editing .sidebar { outline: 1px dashed rgba(122,162,255,.35); outline-offset: -1px; }
   .editing .main { outline: 1px dashed rgba(122,162,255,.35); outline-offset: -1px; }
+  /* The target screen of a board with its own size: arrange cards inside this frame. */
+  .frame { position: absolute; left: 0; top: 0; width: 100%; box-sizing: border-box; border: 2px dashed var(--accent); background: rgba(122,162,255,.05); pointer-events: none; }
   .editing .main::after { content: attr(data-size); position: absolute; right: 8px; bottom: 8px; font-size: 11px; color: var(--muted); pointer-events: none; }
   .place { position: absolute; }
   .guide { position: absolute; left: 0; right: 0; height: 0; border-top: 1px solid #ff5fa2; z-index: 2000; pointer-events: none; }

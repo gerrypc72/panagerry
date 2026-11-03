@@ -103,8 +103,40 @@ export function setPanelSide(side) {
 /** A card its "Visible when" template currently hides. */
 export const cardHidden = (c) => !!c?.visible && !truthy(t(c.visible, { entity_id: c.props?.entity }));
 
-/** The layout a device actually shows (main, a reflow of main, or its own). */
+/** Target screens a board (view) can be designed for, in the px the page sees (edit freely per view). */
+export const SCREENS = {
+  ipad: { label: 'iPad 10.2" (landscape)', width: 1080, height: 810 },
+  'ipad-mini': { label: 'iPad mini (landscape)', width: 1133, height: 744 },
+  'ipad-11': { label: 'iPad Air / Pro 11" (landscape)', width: 1194, height: 834 },
+  'ipad-13': { label: 'iPad Pro 12.9" (landscape)', width: 1366, height: 1024 },
+  spot: { label: 'Echo Spot', width: 480, height: 480 },
+  show5: { label: 'Echo Show 5', width: 960, height: 480 },
+  show8: { label: 'Echo Show 8', width: 1280, height: 800 },
+};
+/** Which preset a view's own size matches: a SCREENS key, 'custom', or '' (it follows the layout's size). */
+export function screenKey(v) {
+  if (!Number(v.width)) return '';
+  return Object.entries(SCREENS).find(([, s]) => s.width === Number(v.width) && s.height === Number(v.height))?.[0] || 'custom';
+}
+/** Give a view its own canvas size (a preset, 'custom', or '' to follow the layout again). */
+export function setViewScreen(v, key) {
+  if (!key) { delete v.width; delete v.height; }
+  else if (SCREENS[key]) { v.width = SCREENS[key].width; v.height = SCREENS[key].height; }
+  else { v.width = Number(v.width) || layout().width; v.height = Number(v.height) || 600; }
+  changed();
+}
+
+/** The layout this device shows, sized for the current view when that view has its own screen
+ *  size: its width and height replace the layout's, and the sidebar is left out (the board IS the screen). */
 export function layout(dev = app.device) {
+  const l = baseLayout(dev);
+  const v = dev === app.device ? app.config.views.find((x) => x.id === app.view) : null;
+  const w = Number(v?.width);
+  if (!w) return l;
+  return { ...l, width: w, height: Number(v.height) || 0, sidebar: { ...l.sidebar, enabled: false } };
+}
+
+function baseLayout(dev = app.device) {
   const ls = app.config.layouts;
   const l = ls[dev];
   if (dev === 'tablet' || l.mode === 'custom') return l;
@@ -546,6 +578,27 @@ export function changeType(card, type, meta) {
   const keep = Object.fromEntries(['entity', 'name', 'icon'].filter((k) => card.props[k] != null && card.props[k] !== '' && meta.fields?.some((f) => f.key === k)).map((k) => [k, card.props[k]]));
   card.type = type;
   card.props = { ...structuredClone(meta.defaults || {}), ...keep };
+  changed();
+}
+
+/** A copy of a board with its own independent copies of every card on it, on every stored layout. */
+export function duplicateView(id) {
+  const src = app.config.views.find((v) => v.id === id);
+  if (!src) return;
+  const nid = uid();
+  app.config.views.push({ ...$state.snapshot(src), id: nid, name: `${src.name} copy` });
+  const clones = {};
+  for (const l of Object.values(app.config.layouts)) {
+    const list = l.zones[id];
+    if (!list) continue;
+    l.zones[nid] = list.map((p) => {
+      const c = app.config.cards[p.card];
+      if (!c) return null;
+      if (!clones[p.card]) { const cid = uid(); app.config.cards[cid] = { ...$state.snapshot(c), id: cid }; clones[p.card] = cid; }
+      return { ...$state.snapshot(p), card: clones[p.card] };
+    }).filter(Boolean);
+  }
+  setView(nid);
   changed();
 }
 
