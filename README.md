@@ -1,6 +1,6 @@
 > **Panagerry** è un fork personale di [Panalume](https://github.com/leacho73/panalume) di leacho73 (licenza MIT), basato sulla versione 0.38.0 e con modifiche per uso proprio. Il copyright originale è nel file `LICENSE`. Com'è fatto e come si aggiorna: [`docs/fork/COSTRUZIONE.md`](docs/fork/COSTRUZIONE.md) e [`docs/fork/AGGIORNAMENTI.md`](docs/fork/AGGIORNAMENTI.md).
 
-<p align="center"><img src="panalume/logo.png" alt="Panalume" width="250"></p>
+<p align="center"><img src="panalume/logo.png" alt="Panagerry" width="250"></p>
 
 <p align="center"><a href="https://github.com/leacho73/panalume/releases"><img src="https://img.shields.io/github/v/release/leacho73/panalume?include_prereleases&label=beta&color=7aa2ff" alt="Latest beta"></a></p>
 
