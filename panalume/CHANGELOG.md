@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.38.5
+
+- **New icon and logo** (a compass rose) so Panagerry is easy to tell apart from Panalume in the sidebar and the add-on store.
+
 ## 0.38.4
 
 - **Runs alongside Panalume.** The add-on is now named **Panagerry** (slug `panagerry`, its own sidebar title and icon), so it installs next to the original Panalume instead of looking like it. It keeps its own data: dashboards made in one don't appear in the other.
