@@ -1,3 +1,5 @@
+> **Fork privato (Panagerry).** Basato su Panalume 0.38.0 (MIT). Come è fatto e come si aggiorna: [`docs/fork/COSTRUZIONE.md`](docs/fork/COSTRUZIONE.md) e [`docs/fork/AGGIORNAMENTI.md`](docs/fork/AGGIORNAMENTI.md).
+
 <p align="center"><img src="panalume/logo.png" alt="Panalume" width="250"></p>
 
 <p align="center"><a href="https://github.com/leacho73/panalume/releases"><img src="https://img.shields.io/github/v/release/leacho73/panalume?include_prereleases&label=beta&color=7aa2ff" alt="Latest beta"></a></p>
