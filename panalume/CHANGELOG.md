@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.38.3
+
+- **Boards with a target screen.** In **Views**, every board can be set to a target screen: iPad (10.2", mini, Air / Pro 11", Pro 12.9"), Echo Spot, Echo Show 5, Echo Show 8 or a custom width × height. The board is drawn at exactly that size (a dashed frame shows the screen while editing), fitted whole to the screen, and has no sidebar. Boards without a size follow the layout's design width as before.
+- **Duplicate board.** Copies a board with independent copies of all its cards, to adapt it to another screen.
+
 ## 0.38.2
 
 - **One layout for every screen (fork).** The phone and desktop variants, the automatic reflow and the device picker are gone: every screen shows the main layout. To adapt a dashboard to another screen, make a separate view and open it with `?view=` / `?fit=`. Stored phone / desktop layouts are left untouched in the data, just never shown.
