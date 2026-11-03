@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.38.2
+
+- **One layout for every screen (fork).** The phone and desktop variants, the automatic reflow and the device picker are gone: every screen shows the main layout. To adapt a dashboard to another screen, make a separate view and open it with `?view=` / `?fit=`. Stored phone / desktop layouts are left untouched in the data, just never shown.
+- **New card: Linear gauge** (horizontal or vertical bar, thresholds, min / max labels).
+- **New card: Wind rose** (compass needle, speed, gust, max gust, optional average direction; Ecowitt sensors are auto-detected).
+
 ## 0.38.1
 
 - **Octopus Energy support removed (fork).** The Octopus rates, Octoplus sessions, Intelligent Octopus, Energy cost today and Heat pump cards are gone, along with the Octopus auto-detection in the other cards and the Intelligent Octopus Go cheap-hours tracker on the Zappi / Eddi card. Shared helpers moved from `lib/octopus.js` to `lib/util.js`. Existing dashboards that still contain the removed cards will show them as unknown cards: delete them in the editor.

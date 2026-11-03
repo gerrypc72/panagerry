@@ -71,18 +71,9 @@ function starter() {
   return { version: 1, theme: { ...DEFAULT_THEME }, views, cards, layouts };
 }
 
+/** One layout for every screen: the tablet layout, whatever the device (fork: no phone / desktop variants). */
 export function detectDevice() {
-  const q = param('device');
-  if (q && DEVICES[q]) return q;
-  const saved = screenDevice();
-  if (saved && DEVICES[saved]) return saved;
-  const w = Math.min(innerWidth, screen.width || innerWidth);
-  if (w < 700) return 'phone';
-  // Touch-only screens are tablets whatever their reported width (high-DPI
-  // tablets can report 1400+ CSS px). Anything with a mouse is a desktop.
-  const touchOnly = matchMedia('(pointer: coarse)').matches && !matchMedia('(any-pointer: fine)').matches;
-  if (touchOnly || (matchMedia('(pointer: coarse)').matches && w <= 1400)) return 'tablet';
-  return 'desktop';
+  return 'tablet';
 }
 
 export const app = $state({
@@ -436,8 +427,7 @@ export function duplicateSelected() {
  *  at the same spot if it's free there, otherwise below what's already there. */
 /** Devices with their own stored layout, other than the one being edited (for "Copy to layout"). */
 export function otherLayouts() {
-  const here = editTarget();
-  return Object.keys(app.config.layouts).filter((d) => d !== here && (d === 'tablet' || app.config.layouts[d].mode === 'custom'));
+  return []; // single layout: nothing to copy to
 }
 
 /** Put the selected card(s) on another device's layout too, in the same view, in about the

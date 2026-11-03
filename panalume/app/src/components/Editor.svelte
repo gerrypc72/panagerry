@@ -354,22 +354,8 @@
         </div>
       {/if}
     {:else if app.panel === 'layout'}
-      <h4>Devices</h4>
-      <p class="hint">This screen: {innerWidth}×{innerHeight}, showing <b>{DEVICES[app.device].label}</b>{param('device') ? ' (set by ?device= in the address)' : ''}.</p>
-      <div class="row seg">
-        {#each Object.entries(DEVICES) as [k, d]}<button class:on={app.device === k} onclick={() => { app.device = k; app.selected = null; app.multi = []; }}>{d.label}</button>{/each}
-      </div>
-      <div class="fields">
-        <Field obj={screenOpts} f={{ key: 'device', label: 'Layout on this screen', type: 'select', options: [{ value: '', label: 'Automatic' }, ...Object.entries(DEVICES).map(([value, d]) => ({ value, label: d.label }))], hint: 'Saved on this screen, e.g. a big tablet that shows the desktop layout. ?device= in the address does the same and wins.' }} onset={(v) => { screenOpts.device = v; setScreenDevice(v); }} />
-      </div>
-      {#if app.device === 'tablet'}
-        <p class="hint">The <b>tablet layout</b> is the main one: phones and desktops show it too unless you give them their own. Pin a screen to a device with <code>?device=phone</code> / <code>desktop</code> in the URL.</p>
-      {:else}
-        <div class="fields">
-          <Field obj={{ mode: app.config.layouts[app.device].mode }} f={{ key: 'mode', label: `${DEVICES[app.device].label} shows`, type: 'select', options: Object.entries(MODES).map(([value, label]) => ({ value, label })) }} onset={(v) => (v === 'custom' || confirm('Discard this device\'s own layout?')) && setMode(app.device, v)} />
-        </div>
-        <p class="hint">{app.config.layouts[app.device].mode === 'custom' ? 'This device has its own layout. Cards added anywhere are still added here too.' : 'Edits here change the tablet layout' + (app.config.layouts[app.device].mode === 'auto' ? ' — or drag something to start a custom phone layout.' : '.')}</p>
-      {/if}
+      <h4>Layout</h4>
+      <p class="hint">One layout for every screen (this fork has no phone or desktop variants). To adapt a dashboard to another screen, make a separate view and use <code>?view=</code> / <code>?fit=</code> in the address.</p>
       <div class="fields">
         <Field obj={app.config.layouts[app.device]} f={{ key: 'kiosk', label: `Hide Home Assistant's header bar on ${app.device === 'tablet' ? 'tablets' : DEVICES[app.device].label.toLowerCase() + 's'}`, type: 'bool' }} />
         <Field obj={app.config.layouts[app.device]} f={{ key: 'display', label: `Sizing on ${app.device === 'tablet' ? 'tablets' : DEVICES[app.device].label.toLowerCase() + 's'}`, type: 'select', options: Object.entries(DISPLAYS).map(([value, label]) => ({ value, label })) }} />
@@ -380,7 +366,6 @@
       {#if app.device === 'tablet' || app.config.layouts[app.device].mode === 'custom'}
         <div class="fields">
           <Field obj={layout()} f={{ key: 'width', label: 'Design width (px) — scaled to fit the screen', type: 'number' }} onset={(v) => setMainWidth((l) => (l.width = v))} />
-          <Field obj={app.config} f={{ key: 'new_cards', label: 'New cards go on', type: 'select', options: [{ value: '', label: 'Every layout (tablet, phone and desktop)' }, { value: 'this', label: 'Only the layout you\'re editing' }], hint: 'With "only this layout", use Copy to layout… on a card to put it on another device too.' }} />
         </div>
         <h4>Sidebar</h4>
         <div class="fields">

@@ -165,9 +165,6 @@
       <select value={app.view} onchange={(e) => setView(e.currentTarget.value)} title="View">
         {#each app.config.views as v}<option value={v.id}>{v.name}</option>{/each}
       </select>
-      <select value={app.device} onchange={(e) => { app.device = e.currentTarget.value; app.selected = null; app.multi = []; }} title="Preview / edit device">
-        {#each Object.entries(DEVICES) as [k, d]}<option value={k}>{d.label}{k !== 'tablet' ? ` (${MODE_SHORT[app.config.layouts[k].mode] || app.config.layouts[k].mode})` : ''}</option>{/each}
-      </select>
       <span class="docks">
         {#each [['left', 'mdi:dock-left'], ['bottom', 'mdi:dock-bottom'], ['right', 'mdi:dock-right']] as [s, ic]}
           <button class:on={!!app.panel && side === s} title={app.panel && side === s ? 'Hide the panel' : `Panel on the ${s}`} aria-label={app.panel && side === s ? 'Hide the panel' : `Panel on the ${s}`} onclick={() => dock(s)}><Icon icon={ic} size="1.2em" /></button>
