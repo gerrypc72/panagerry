@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.38.4
+
+- **Runs alongside Panalume.** The add-on is now named **Panagerry** (slug `panagerry`, its own sidebar title and icon), so it installs next to the original Panalume instead of looking like it. It keeps its own data: dashboards made in one don't appear in the other.
+
 ## 0.38.3
 
 - **Boards with a target screen.** In **Views**, every board can be set to a target screen: iPad (10.2", mini, Air / Pro 11", Pro 12.9"), Echo Spot, Echo Show 5, Echo Show 8 or a custom width × height. The board is drawn at exactly that size (a dashed frame shows the screen while editing), fitted whole to the screen, and has no sidebar. Boards without a size follow the layout's design width as before.
