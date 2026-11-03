@@ -57,6 +57,7 @@ Dopo il merge:
 ## Cose da tenere d'occhio
 
 - **Rinomina dell'add-on:** `slug: panagerry` non va cambiato, altrimenti HA lo tratta come un add-on nuovo (dati inclusi).
+- **Se il repo è pubblico e l'add-on è installato da repository:** dopo il push su `main` con la versione aumentata, in HA basta Controlla aggiornamenti (o `ha store reload`) e Aggiorna; il passo `rsync` non serve. Se lo richiudi privato, HA non vede più le novità finché non lo riapri.
 - **Repo privato e HA:** l'installazione da elenco repository richiederebbe un token nell'URL; per questo si usa la copia in `addons/`.
 - **Sincronizzazione repo:** in `HAVoiceLab` lo script `sync.sh` include anche `panagerry` (cartella sorella `~/voice/panagerry`).
 - **Segreti:** nessun token nel repo; le prove usano `/tmp/ha_token.txt` fuori dal repo.

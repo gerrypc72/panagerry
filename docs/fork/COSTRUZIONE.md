@@ -1,9 +1,9 @@
 # Panagerry: informazioni di costruzione
 
-Fork privato di [Panalume](https://github.com/leacho73/panalume) (licenza MIT, il file `LICENSE` con il copyright originale va mantenuto).
+Fork personale di [Panalume](https://github.com/leacho73/panalume) (licenza MIT, il file `LICENSE` con il copyright originale va mantenuto).
 Dashboard drag-and-drop per Home Assistant, installata come add-on locale accanto all'originale.
 
-- Repo del fork: `gerrypc72/panagerry` (privato), branch `main`. Remote `origin`.
+- Repo del fork: `gerrypc72/panagerry`, branch `main`. Remote `origin`.
 - Repo originale: `leacho73/panalume`, remote `upstream` (da aggiungere in un clone nuovo, vedi AGGIORNAMENTI.md).
 - Base di partenza: Panalume **0.38.0**, commit upstream `7417084`.
 - Stack: Svelte 5 + Vite 8, server Node (`app/server/index.js`), add-on HA con `Dockerfile` (node:22-alpine, `npm ci` + `npm run build` dentro il container).
@@ -53,7 +53,7 @@ L'avviso "Some chunks are larger than 500 kB" è normale, si ignora.
 ```bash
 echo "TOKEN_UTENTE_HA" > /tmp/ha_token.txt          # fuori dal repo, mai committato
 cd panalume/app
-HA_URL=http://10.20.30.152:8123 HA_TOKEN_FILE=/tmp/ha_token.txt npm run server   # :8099
+HA_URL=http://<IP-DI-HA>:8123 HA_TOKEN_FILE=/tmp/ha_token.txt npm run server   # :8099
 npm run dev                                                                      # Vite su :5173
 ```
 - La dashboard di prova resta in `panalume/app/data/dashboard.json` (ignorato da git): non tocca quella dell'add-on in HA.
@@ -61,10 +61,10 @@ npm run dev                                                                     
 
 ## Installazione in HA come add-on locale
 
-Il repo è privato: HA non può leggerlo dall'elenco dei repository di add-on (servirebbe un token nell'URL), quindi si copia la cartella.
+Se il repo è **privato**, HA non può leggerlo dall'elenco dei repository di add-on (servirebbe un token nell'URL): si copia la cartella come add-on locale (sotto). Se il repo è **pubblico**, si può aggiungere come repository (Impostazioni → App → Store → ⋮ → Repository → `https://github.com/gerrypc72/panagerry`): l'add-on risulta allora un'istanza diversa da quella locale (`<hash>_panagerry` invece di `local_panagerry`) con una cartella dati propria, quindi esporta/copia la dashboard prima di passare dall'una all'altra e non tenere installate entrambe.
 
 1. In HA: componente **Samba share** (o SSH) con le cartelle condivise.
-2. Mac: Finder → Connetti al server → `smb://10.20.30.152/addons` (monta `/Volumes/addons`).
+2. Mac: Finder → Connetti al server → `smb://<IP-DI-HA>/addons` (monta `/Volumes/addons`).
 3. Copia, escludendo i file di build del Mac (`config.yaml` e `Dockerfile` devono stare direttamente in `addons/panagerry/`):
    ```bash
    cd panalume
