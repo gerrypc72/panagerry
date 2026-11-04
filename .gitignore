@@ -2,3 +2,4 @@ node_modules
 dist
 data
 CLAUDE.md
+__pycache__
