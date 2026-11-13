@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.40.1
+
+- **Echo Show rendering (experiment).** On the Echo Show 5 / 8 web engines the Fan, Climate and menu buttons were drawn white and empty, and the slider track was invisible, while the same page is fine on a Mac. Everything that failed was a translucent colour written in the stylesheet (`rgba(...)`), not data or layout. The CSS is now minified for older engines (`cssTarget` chrome61), which keeps the plain `rgba()` form. If it still looks wrong, open the page with `?diag` (e.g. `…:8100/?diag`): after 3 seconds an on-screen report shows which colour syntaxes the engine accepts and how it parsed the real rules (tap to close).
 ## 0.40.0
 
 - **Panagerry: merged with Panalume 0.40.0.** Everything below came from upstream. The fork still builds the add-on on your machine from its own `Dockerfile` (the upstream pre-built image `ghcr.io/leacho73/{arch}-panalume` is not used, as it would install upstream's code, not the fork's), has no Octopus support, one layout for every screen, boards with a target screen, and the Linear gauge and Wind rose cards.
