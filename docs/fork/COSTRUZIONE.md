@@ -5,7 +5,7 @@ Dashboard drag-and-drop per Home Assistant, installata come add-on locale accant
 
 - Repo del fork: `gerrypc72/panagerry`, branch `main`. Remote `origin`.
 - Repo originale: `leacho73/panalume`, remote `upstream` (da aggiungere in un clone nuovo, vedi AGGIORNAMENTI.md).
-- Base di partenza: Panalume **0.38.0**, commit upstream `7417084`.
+- Base di partenza: Panalume **0.38.0** (commit upstream `7417084`); ultimo allineamento: **0.40.0** (commit upstream `eacb9b1`, v0.40.0).
 - Stack: Svelte 5 + Vite 8, server Node (`app/server/index.js`), add-on HA con `Dockerfile` (node:22-alpine, `npm ci` + `npm run build` dentro il container).
 
 ## Struttura utile
@@ -32,6 +32,7 @@ docs/fork/                questi documenti
 | 0.38.3 | **Schermo di destinazione per board.** Ogni vista può avere `width` e `height` propri (preset iPad, Echo Spot / Show 5 / Show 8, custom). `layout()` restituisce un layout con quella larghezza/altezza e senza sidebar (`baseLayout()` è l'originale). Stage: display `screen` forzato, niente "fill", cornice tratteggiata in modifica. Pulsante **Duplicate** per copiare una board con carte indipendenti. | `lib/config.svelte.js` (`SCREENS`, `screenKey`, `setViewScreen`, `duplicateView`), `Stage.svelte`, `Editor.svelte` |
 | 0.38.4 | **Add-on rinominato Panagerry** (slug `panagerry`, titolo, icona `mdi:compass-rose`, URL e maintainer in `repository.yaml`), per convivere con Panalume. | `config.yaml`, `repository.yaml` |
 | 0.38.5 | **Nuova icona e logo** (rosa dei venti, sfumatura turchese-ambra) per distinguere Panagerry da Panalume. Immagini generate con uno script Pillow (non nel repo): `panalume/icon.png` 128×128, `panalume/logo.png` 250×100. | `panalume/icon.png`, `panalume/logo.png`, `README.md` |
+| 0.40.0 | **Merge di Panalume 0.40.0** (nuove carte: Timers, Guest WiFi, Music hub, Chalkboard, Weather radar, Circuit energy, Network status, Trash day, Meal plan; zoom sulle telecamere, inclinazione tapparelle, screensaver e altro, vedi CHANGELOG). Adattamenti del fork: **nessuna riga `image:`** in `config.yaml` (altrimenti HA scarica l'immagine di upstream e ignora il codice del fork), `panalume/Dockerfile` senza `--platform=$BUILDPLATFORM` e con etichette Panagerry, job `image` e `release` di `.github/workflows/release.yml` limitati al repo `leacho73/panalume`. | `config.yaml`, `Dockerfile`, `.github/workflows/release.yml`, `lib/config.svelte.js` (conflitto risolto tenendo entrambe le parti) |
 
 ## Build in locale (Mac)
 

@@ -46,6 +46,9 @@ Prima di fare il merge leggi il CHANGELOG upstream: se le novità non ti servono
 | `lib/config.svelte.js` | `detectDevice`, `otherLayouts`, `layout()`/`baseLayout()`, `SCREENS`, `screenKey`, `setViewScreen`, `duplicateView` | unisci a mano, tenendo le funzioni del fork |
 | `components/Stage.svelte` | `display`, `mainContentH`, `fill`, cornice `.frame` | unisci a mano |
 | `components/Editor.svelte`, `App.svelte` | pannello Layout semplificato, campi schermo/Duplicate nel pannello Views, selettore dispositivo tolto | unisci a mano |
+| `config.yaml` | upstream (da 0.40.0) ha la riga `image: "ghcr.io/leacho73/{arch}-panalume"` | **non prenderla mai**: con `image:` HA scarica l'immagine di upstream e ignora il tuo codice. Tieni nome, slug, URL, icona del fork e nessuna riga `image:` |
+| `panalume/Dockerfile` | upstream usa `FROM --platform=$BUILDPLATFORM` e le etichette di Panalume | tieni `FROM node:22-alpine AS build` (la costruzione avviene in HA) e le etichette Panagerry |
+| `.github/workflows/release.yml` | pubblica immagini su ghcr.io e crea release | tieni `if: github.repository == 'leacho73/panalume'` sui job `image` e `release` |
 | `config.yaml`, `repository.yaml`, `CHANGELOG.md` | nome, slug, URL, icona, versione del fork | tieni nome/slug/URL/icona del fork; versione = la tua successiva |
 
 Dopo il merge:
