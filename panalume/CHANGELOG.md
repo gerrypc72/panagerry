@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.40.2
+
+- **Fix: adding a card added two.** On a board with its own screen size (0.38.3) the card was placed once on the board's layout and once on the stored one, which share the same placements, so it appeared twice. Each set of placements is now used once, also when pasting a group and when adding a view filled from an area.
+
 ## 0.40.1
 
 - **Echo Show rendering (fixed, confirmed on the Echo Show 8).** On the Echo Show 5 / 8 web engines the Fan, Climate and menu buttons were drawn white and empty, and the slider track was invisible, while the same page is fine on a Mac. Everything that failed was a translucent colour written in the stylesheet (`rgba(...)`), not data or layout. The CSS is now minified for older engines (`cssTarget` chrome61), which keeps the plain `rgba()` form. The `?diag` page stays for any other device that draws it wrong: open the page with `?diag` (e.g. `…:8100/?diag`): after 3 seconds an on-screen report shows which colour syntaxes the engine accepts and how it parsed the real rules (tap to close).

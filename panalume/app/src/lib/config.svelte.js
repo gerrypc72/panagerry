@@ -325,6 +325,14 @@ export function zoneList(zone, l = layout()) {
 
 /** Stored layouts that hold their own placements (main + any custom ones). */
 const storedLayouts = () => Object.entries(app.config.layouts).filter(([dev, l]) => dev === 'tablet' || l.mode === 'custom').map(([, l]) => l);
+/** The layouts to change together: the one being edited plus every stored one, each set of
+ *  placements once. A board with its own screen size edits a copy of the stored layout (same
+ *  `zones`), which would otherwise count twice and add every card twice. */
+function editLayouts(here = layout()) {
+  const seen = new Set(), out = [];
+  for (const l of [here, ...storedLayouts()]) if (!seen.has(l.zones)) { seen.add(l.zones); out.push(l); }
+  return out;
+}
 
 export function selectedPlacement() {
   const s = app.selected;
@@ -342,7 +350,7 @@ export function selectedCard() {
 function placeEverywhere(cardId, zone, size) {
   ensureEditable();
   const here = layout();
-  for (const l of app.config.new_cards === 'this' ? [here] : new Set([here, ...storedLayouts()])) {
+  for (const l of app.config.new_cards === 'this' ? [here] : editLayouts(here)) {
     const z = zone === 'sidebar' && !l.sidebar.enabled ? app.view : zone;
     const list = zoneList(z, l);
     const y = list.reduce((m, p) => Math.max(m, p.y + p.h), 0) + GRID * 2;
@@ -505,7 +513,7 @@ export function copyToView(view) {
   for (const [old, id] of ids) app.config.cards[id] = { ...$state.snapshot(app.config.cards[old]), id };
   const group = ids.size > 1 ? uid() : null;
   const hit = (a, b) => a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
-  for (const l of new Set([layout(), ...storedLayouts()])) {
+  for (const l of editLayouts()) {
     const ps = Object.values(l.zones).flat().filter((p) => ids.has(p.card));
     if (!ps.length) continue;
     const dst = zoneList(view, l);
@@ -562,7 +570,7 @@ export function addFilledView(name, icon, items) {
   app.config.views.push({ id, name, icon: icon || 'mdi:view-dashboard' });
   const ids = items.map((it) => { const c = uid(); app.config.cards[c] = normalise({ id: c, type: it.type, props: it.props }); return c; });
   const gap = GRID * 2;
-  for (const l of new Set([layout(), ...storedLayouts()])) {
+  for (const l of editLayouts()) {
     const W = zoneWidth(id, l), list = zoneList(id, l);
     let x = gap, y = gap, rowH = 0;
     items.forEach((it, i) => {
