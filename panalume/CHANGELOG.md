@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.40.3
+
+- **Slider card: Min and Max.** Set the range the slider covers. For a number it replaces the entity's own range; for a light, fan, volume or cover it limits the slider to that part of 0–100 % (e.g. 10 to 80). Left blank, nothing changes. A value outside the range no longer draws a negative fill, and steps count from Min.
+
 ## 0.40.2
 
 - **Fix: adding a card added two.** On a board with its own screen size (0.38.3) the card was placed once on the board's layout and once on the stored one, which share the same placements, so it appeared twice. Each set of placements is now used once, also when pasting a group and when adding a view filled from an area.

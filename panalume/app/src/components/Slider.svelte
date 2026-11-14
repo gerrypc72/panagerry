@@ -6,13 +6,13 @@
   let el;
   let drag = $state(null);
   const shown = $derived(drag ?? value ?? min);
-  const pct = $derived(((shown - min) / (max - min || 1)) * 100);
+  const pct = $derived(Math.min(100, Math.max(0, ((shown - min) / (max - min || 1)) * 100)));
 
   function valueAt(e) {
     const r = el.getBoundingClientRect();
     const f = vertical ? 1 - (e.clientY - r.top) / r.height : (e.clientX - r.left) / r.width;
     const v = min + Math.min(1, Math.max(0, f)) * (max - min);
-    return Math.round(v / step) * step;
+    return Math.round((v - min) / step) * step + min;
   }
   function down(e) {
     if (disabled) return;

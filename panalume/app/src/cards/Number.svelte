@@ -7,6 +7,8 @@
       { key: 'entity', label: 'Number / light / fan / volume', type: 'entity', domain: ['number', 'input_number', 'light', 'fan', 'media_player', 'cover'] },
       { key: 'name', label: 'Name', type: 'text' },
       { key: 'icon', label: 'Icon', type: 'icon' },
+      { key: 'min', label: 'Min (blank: the entity\'s own, or 0)', type: 'text' },
+      { key: 'max', label: 'Max (blank: the entity\'s own, or 100)', type: 'text' },
       { key: 'color', label: 'Colour', type: 'color' },
       { key: 'vertical', label: 'Vertical', type: 'bool' },
     ],
@@ -23,12 +25,20 @@
   const e = $derived(ent(props.entity));
   const d = $derived(domain(e?.entity_id));
   const a = $derived(e?.attributes || {});
-  const cfg = $derived.by(() => {
+  // Min / Max set on the card replace the entity's own range (for a light, fan, volume or cover:
+  // the slider then covers just that part of 0–100 %). Ignored unless Max is above Min.
+  const own = (k) => (props[k] === '' || props[k] == null ? null : Number.isFinite(Number(t(props[k]))) ? Number(t(props[k])) : null);
+  const base = () => {
     if (d === 'light') return { v: e.state === 'on' ? Math.round(((a.brightness ?? 255) / 255) * 100) : 0, min: 0, max: 100, step: 1, unit: '%' };
     if (d === 'fan') return { v: a.percentage ?? 0, min: 0, max: 100, step: a.percentage_step || 1, unit: '%' };
     if (d === 'media_player') return { v: Math.round((a.volume_level ?? 0) * 100), min: 0, max: 100, step: 1, unit: '%' };
     if (d === 'cover') return { v: a.current_position ?? 0, min: 0, max: 100, step: 1, unit: '%' };
     return { v: Number(e?.state), min: a.min ?? 0, max: a.max ?? 100, step: a.step ?? 1, unit: a.unit_of_measurement || '' };
+  };
+  const cfg = $derived.by(() => {
+    const c = base();
+    const lo = own('min') ?? c.min, hi = own('max') ?? c.max;
+    return hi > lo ? { ...c, min: lo, max: hi } : c;
   });
   function set(v) {
     const target = { entity_id: e.entity_id };
