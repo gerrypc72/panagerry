@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.40.4
+
+- **Portrait boards.** Target screens for the Echo Show 5, Echo Show 8 and the iPads in portrait, and a **Rotate** button next to a board's width and height that swaps them (the cards stay where they are, so move them into the new frame).
+
 ## 0.40.3
 
 - **Slider card: Min and Max.** Set the range the slider covers. For a number it replaces the entity's own range; for a light, fan, volume or cover it limits the slider to that part of 0–100 % (e.g. 10 to 80). Left blank, nothing changes. A value outside the range no longer draws a negative fill, and steps count from Min.

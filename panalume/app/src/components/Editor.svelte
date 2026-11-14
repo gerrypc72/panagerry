@@ -418,6 +418,7 @@
             {#if Number(v.width)}
               <Field obj={v} f={{ key: 'width', label: 'Width (px)', type: 'number' }} />
               <Field obj={v} f={{ key: 'height', label: 'Height (px)', type: 'number' }} />
+              <button class="sm" title="Turn the board between landscape and portrait: width and height swap, cards stay where they are" onclick={() => { if (!Number(v.height)) return; [v.width, v.height] = [Number(v.height), Number(v.width)]; changed(); }}><Icon icon="mdi:phone-rotate-landscape" size="1em" /> Rotate (swap width / height)</button>
             {/if}
           </div>
         </div>

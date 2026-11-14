@@ -117,6 +117,11 @@ export const SCREENS = {
   spot: { label: 'Echo Spot', width: 480, height: 480 },
   show5: { label: 'Echo Show 5', width: 960, height: 480 },
   show8: { label: 'Echo Show 8', width: 1280, height: 800 },
+  // The same screens turned upright (the device or its kiosk app set to portrait).
+  'show5-portrait': { label: 'Echo Show 5 (portrait)', width: 480, height: 960 },
+  'show8-portrait': { label: 'Echo Show 8 (portrait)', width: 800, height: 1280 },
+  'ipad-portrait': { label: 'iPad 10.2" (portrait)', width: 810, height: 1080 },
+  'ipad-11-portrait': { label: 'iPad Air / Pro 11" (portrait)', width: 834, height: 1194 },
 };
 /** Which preset a view's own size matches: a SCREENS key, 'custom', or '' (it follows the layout's size). */
 export function screenKey(v) {
