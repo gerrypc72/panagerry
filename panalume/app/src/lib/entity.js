@@ -1,11 +1,12 @@
 // Entity helpers: names, formatted states, default icons, toggling.
 import { callService } from './ha.svelte.js';
+import { haName } from './names.svelte.js';
 import { stateWord } from './i18n.svelte.js';
 
 export const domain = (id) => id?.split('.')[0] || '';
 
 export function name(e, fallback) {
-  return fallback || e?.attributes.friendly_name || e?.entity_id || '';
+  return fallback || haName(e?.entity_id) || e?.attributes.friendly_name || e?.entity_id || '';
 }
 
 const OFF = new Set(['off', 'closed', 'idle', 'standby', 'unavailable', 'unknown', 'not_home', 'paused', 'disarmed', 'docked', 'locked', 'none', '']);
@@ -32,6 +33,15 @@ export function toggle(e) {
   if (d === 'button' || d === 'input_button') return callService(d, 'press', {}, target);
   if (d === 'climate') return callService('climate', e.state === 'off' ? 'turn_on' : 'turn_off', {}, target);
   return callService('homeassistant', 'toggle', {}, target);
+}
+
+/** Money in its own currency, e.g. 3.613 GBP → "£3.61" (two decimals unless told otherwise).
+ *  Returns null when the currency code isn't one the browser knows. */
+export function formatMoney(v, currency, digits) {
+  const n = Number(v);
+  if (v === '' || v == null || Number.isNaN(n)) return null;
+  const d = digits ?? 2;
+  try { return n.toLocaleString(undefined, { style: 'currency', currency, minimumFractionDigits: d, maximumFractionDigits: d }); } catch { return null; }
 }
 
 export function formatNumber(v, digits) {
