@@ -19,3 +19,27 @@ input[type='checkbox'] { width: auto; accent-color: var(--accent); }
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
+
+/* A card's "Secondary text size" (Style tab): the small print under or beside the main text. */
+.card[style*="--sec-size"] small,
+.card[style*="--sec-size"] .state,
+.card[style*="--sec-size"] .sub,
+.card[style*="--sec-size"] .dim,
+.card[style*="--sec-size"] .hint,
+.card[style*="--sec-size"] .note,
+.card[style*="--sec-size"] .when,
+.card[style*="--sec-size"] .unit,
+.card[style*="--sec-size"] .u,
+.card[style*="--sec-size"] .lname,
+.card[style*="--sec-size"] .sens,
+.card[style*="--sec-size"] .scale,
+.card[style*="--sec-size"] .msg,
+.card[style*="--sec-size"] .more,
+.card[style*="--sec-size"] .empty,
+.card[style*="--sec-size"] .none,
+.card[style*="--sec-size"] .gauge .name,
+.card[style*="--sec-size"] .lg .name,
+.card[style*="--sec-size"] .num .v,
+.card[style*="--sec-size"] .nm small {
+  font-size: var(--sec-size) !important;
+}

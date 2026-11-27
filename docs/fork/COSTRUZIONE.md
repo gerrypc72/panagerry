@@ -5,7 +5,7 @@ Dashboard drag-and-drop per Home Assistant, installata come add-on locale accant
 
 - Repo del fork: `gerrypc72/panagerry`, branch `main`. Remote `origin`.
 - Repo originale: `leacho73/panalume`, remote `upstream` (da aggiungere in un clone nuovo, vedi AGGIORNAMENTI.md).
-- Base di partenza: Panalume **0.38.0** (commit upstream `7417084`); ultimo allineamento: **0.40.0** (commit upstream `eacb9b1`, v0.40.0).
+- Base di partenza: Panalume **0.38.0** (commit upstream `7417084`); ultimo allineamento: **0.42.0** (commit upstream `80d91de`, v0.42.0).
 - Stack: Svelte 5 + Vite 8, server Node (`app/server/index.js`), add-on HA con `Dockerfile` (node:22-alpine, `npm ci` + `npm run build` dentro il container).
 
 ## Struttura utile
@@ -34,6 +34,9 @@ docs/fork/                questi documenti
 | 0.38.5 | **Nuova icona e logo** (rosa dei venti, sfumatura turchese-ambra) per distinguere Panagerry da Panalume. Immagini generate con uno script Pillow (non nel repo): `panalume/icon.png` 128×128, `panalume/logo.png` 250×100. | `panalume/icon.png`, `panalume/logo.png`, `README.md` |
 | 0.40.0 | **Merge di Panalume 0.40.0** (nuove carte: Timers, Guest WiFi, Music hub, Chalkboard, Weather radar, Circuit energy, Network status, Trash day, Meal plan; zoom sulle telecamere, inclinazione tapparelle, screensaver e altro, vedi CHANGELOG). Adattamenti del fork: **nessuna riga `image:`** in `config.yaml` (altrimenti HA scarica l'immagine di upstream e ignora il codice del fork), `panalume/Dockerfile` senza `--platform=$BUILDPLATFORM` e con etichette Panagerry, job `image` e `release` di `.github/workflows/release.yml` limitati al repo `leacho73/panalume`. | `config.yaml`, `Dockerfile`, `.github/workflows/release.yml`, `lib/config.svelte.js` (conflitto risolto tenendo entrambe le parti) |
 | 0.40.1 | **Rendering sugli Echo Show corretto.** Fan, Climate e i pulsanti del menu apparivano bianchi e vuoti, e la traccia dello slider invisibile: i colori traslucidi `rgba()` del CSS compilato non venivano applicati. Corretto con `cssTarget: ['chrome61', 'safari14']` in `vite.config.js` (il minificatore non riscrive più i colori in forme che quel WebView scarta). Verificato sul Show 8. Aggiunta la pagina diagnostica `?diag` (report a video su sintassi di colore e regole lette dal motore, tocca per chiudere). | `app/vite.config.js`, `app/src/lib/diag.js`, `app/src/main.js` |
+| 0.40.2 | **Fix:** una carta aggiunta su una board con schermo proprio compariva due volte (`editLayouts()` in `config.svelte.js` usa ogni insieme di posizionamenti una volta). | `lib/config.svelte.js` |
+| 0.40.3 | **Carta Slider con Min e Max** (campi `min`/`max`); Slider: riempimento limitato a 0–100 %, scatti contati dal minimo. | `cards/Number.svelte`, `components/Slider.svelte` |
+| 0.42.1 | **Merge di Panalume 0.42.0** (banner `panalume_notify`, Activity, Time picker, Chips, Weather alerts, Air quality, Daylight milestones, Tibber, nomi come HA 2026.11, viste per utente/schermo, ecc.). **Linear gauge con bande di colore** (`0 red, 20 orange, 40 green`, anche disegnate sulla barra). **Dimensioni testo separate:** nello stile di ogni carta, "Main text size" e "Secondary text size" (`fontSecondary` → `--sec-size`, regola globale in `app.css` su `small`, `.state`, `.sub`, `.dim`, `.hint`…). Conflitti risolti: README, CHANGELOG, config.yaml, config.svelte.js (`detectDevice` resta `'tablet'`), Editor.svelte; `EnergyToday` resta eliminata. | `cards/LinearGauge.svelte`, `components/CardFrame.svelte`, `components/Editor.svelte`, `app.css` |
 
 ## Build in locale (Mac)
 

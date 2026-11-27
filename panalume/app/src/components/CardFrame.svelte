@@ -40,6 +40,7 @@
     add('opacity', t(s.opacity, vars));
     add('font-family', t(s.font, vars));
     add('font-size', px(t(s.fontSize, vars)));
+    add('--sec-size', px(t(s.fontSecondary, vars)));
     add('font-weight', t(s.fontWeight, vars));
     add('text-align', t(s.align, vars));
     const img = t(s.backgroundImage, vars);

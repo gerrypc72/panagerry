@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.42.1
+
+- **Merged with Panalume 0.42.0** (banners from Home Assistant, Activity, Time picker, Chips, Weather alerts, Air quality, Daylight milestones, Tibber and more, see the 0.41.0 / 0.42.0 notes below). The fork still builds the add-on on your machine from its own `Dockerfile` (upstream's pre-built image is not used) and keeps no Octopus support, one layout for every screen, boards with a target screen, the Wind rose, Slider Min / Max and the Echo Show rendering fix.
+- **Linear gauge: colour bands** like the Gauge's (`0 red, 20 orange, 40 green`), and **Show the bands along the bar** to draw them faintly behind the fill.
+- **Main and secondary text sizes.** In a card's Style tab, **Main text size** (as before) and the new **Secondary text size** are set separately: the small print (state under a name, units, hints, empty-state messages) on most cards follows it.
+
 ## 0.42.0
 
 - **Banners from Home Assistant** (thanks, [@Pissbirne](https://github.com/Pissbirne)). An automation fires a `panalume_notify` event and every screen shows a message over the whole dashboard, whatever view is open: a title, an icon, info / warning / critical, and how many seconds it stays. Messages that arrive together queue, a banner wakes the screensaver, and one can go to a single named screen (**Layout → This screen's name**) or to one Home Assistant user.
@@ -35,10 +41,6 @@
 - **Chores card** (thanks, [@mrclean5953](https://github.com/mrclean5953)). A column per person from their to-do lists, ticked off on the card, with a leaderboard.
 - **Music card** (thanks, [@mgf909](https://github.com/mgf909), and [@DaveCBr](https://github.com/DaveCBr) for asking). Music Assistant favourites, albums and radio as tiles, a search, and the speakers to play them on. Album art is off unless you turn it on, as it loads from Music Assistant or the music service.
 - **Money looks like money.** A Sensor card showing a cost in pounds, euros or dollars now shows £3.61, with the currency in front.
-
-## 0.42.0 (Panagerry)
-
-- **Panagerry: merged with Panalume 0.42.0.** Same fork changes as before (no Octopus, one layout for every screen, boards with a target screen, Linear gauge with colour bands, Wind rose, Slider Min / Max, separate main / secondary text sizes), still built on your machine from its own `Dockerfile` (the upstream pre-built image is not used).
 
 ## 0.40.3
 

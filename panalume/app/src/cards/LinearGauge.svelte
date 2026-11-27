@@ -15,6 +15,8 @@
       { key: 'green', label: 'Green from', type: 'text' },
       { key: 'yellow', label: 'Yellow from', type: 'text' },
       { key: 'red', label: 'Red from', type: 'text' },
+      { key: 'bands', label: 'Colour bands (instead of green / yellow / red)', type: 'text', placeholder: '0 red, 20 orange, 40 green', hint: 'Each colour applies from its number up to the next one, so low can be red (fuel, battery) and a range can be green in the middle: 0 red, 20 orange, 40 green, 80 orange, 90 red. Names or any CSS colour.' },
+      { key: 'bands_track', label: 'Show the bands along the bar', type: 'bool' },
       { key: 'color', label: 'Colour (fixed/template)', type: 'color' },
     ],
   };
@@ -30,8 +32,14 @@
   const max = $derived(Number(t(props.max)) || 100);
   const f = $derived(Number.isNaN(v) || max === min ? 0 : Math.min(1, Math.max(0, (v - min) / (max - min))));
   const num = (k) => (props[k] === '' || props[k] == null ? null : Number(t(props[k])));
+  // The house's own shades for the usual names; anything else is used as given.
+  const SHADE = { red: '#ff6b6b', orange: '#ff9a3c', amber: '#ffc861', yellow: '#ffc861', green: '#5bd88f', blue: '#4fb4ff' };
+  // "0 red, 20 orange, 40 green" → bands from each number upwards, lowest first.
+  const bands = $derived(String(t(props.bands) ?? '').split(',').map((b) => b.trim().match(/^(-?\d+(?:[.,]\d+)?)\s+(.+)$/)).filter(Boolean)
+    .map((m) => ({ from: Number(m[1].replace(',', '.')), color: SHADE[m[2].trim().toLowerCase()] || m[2].trim() })).sort((a, b) => a.from - b.from));
   const color = $derived.by(() => {
     if (props.color) return t(props.color);
+    if (bands.length) return Number.isNaN(v) ? 'var(--accent)' : [...bands].reverse().find((b) => v >= b.from)?.color || bands[0].color;
     const r = num('red'), y = num('yellow'), g = num('green');
     if (r != null && v >= r) return '#ff6b6b';
     if (y != null && v >= y) return '#ffc861';
@@ -39,6 +47,13 @@
     return 'var(--accent)';
   });
   const vertical = $derived(props.orientation === 'vertical');
+  // The bands drawn along the bar, faintly, behind the fill (the lowest band also covers below its number).
+  const track = $derived.by(() => {
+    if (!props.bands_track || !bands.length || max === min) return '';
+    const at = (x) => Math.min(100, Math.max(0, ((x - min) / (max - min)) * 100));
+    const stops = bands.map((b, i) => `${b.color} ${i === 0 ? 0 : at(b.from)}% ${i + 1 < bands.length ? at(bands[i + 1].from) : 100}%`);
+    return `linear-gradient(${vertical ? 'to top' : 'to right'}, ${stops.join(', ')})`;
+  });
   const unit = $derived(t(props.unit) || e?.attributes.unit_of_measurement || '');
   const label = $derived(t(props.name) || name(e));
 </script>
@@ -49,7 +64,7 @@
     <span class="val">{Number.isNaN(v) ? '—' : formatNumber(v)}<small>{unit}</small></span>
   </div>
   <div class="body">
-    <div class="track"><div class="fill" style="{vertical ? 'height' : 'width'}:{f * 100}%;background:{color}"></div></div>
+    <div class="track">{#if track}<div class="bands" style="background:{track}"></div>{/if}<div class="fill" style="{vertical ? 'height' : 'width'}:{f * 100}%;background:{color}"></div></div>
     {#if props.scale !== false}
       <div class="scale"><span>{formatNumber(min)}</span><span>{formatNumber(max)}</span></div>
     {/if}
@@ -63,8 +78,9 @@
   .val { font-size: 1.4em; font-weight: 600; white-space: nowrap; }
   small { font-size: .55em; color: var(--muted); margin-left: 2px; }
   .body { display: flex; flex-direction: column; gap: 4px; }
-  .track { height: 12px; border-radius: 6px; background: rgba(255,255,255,.1); overflow: hidden; display: flex; }
-  .fill { height: 100%; border-radius: 6px; transition: width .6s, height .6s, background .3s; }
+  .track { position: relative; height: 12px; border-radius: 6px; background: rgba(255,255,255,.1); overflow: hidden; display: flex; }
+  .bands { position: absolute; inset: 0; opacity: .35; }
+  .fill { position: relative; height: 100%; border-radius: 6px; transition: width .6s, height .6s, background .3s; }
   .scale { display: flex; justify-content: space-between; color: var(--muted); font-size: .75em; }
   /* vertical: the bar grows upward and fills the card */
   .vertical { flex-direction: column; justify-content: flex-start; }
